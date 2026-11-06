@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1b25">
+  <title>Para Mirian · Nuestro pequeño infinito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --wine: #6f2449;
+      --rose: #bd5574;
+      --gold: #f0c98b;
+      --paper: #fffaf3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: safe center;
+      overflow-x: hidden;
+      padding: 48px 20px;
+      color: #fff8f1;
+      background:
+        radial-gradient(ellipse at 50% 32%, rgba(166, 69, 103, 0.42), transparent 42%),
+        radial-gradient(ellipse at 15% 85%, rgba(132, 59, 88, 0.3), transparent 38%),
+        linear-gradient(145deg, #281624 0%, #492039 48%, #31182d 100%);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(255, 222, 189, 0.09);
+      border-radius: 50%;
+      content: '';
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -220px;
+      left: -150px;
+      box-shadow: 0 0 0 34px rgba(255, 222, 189, 0.025), 0 0 0 70px rgba(255, 222, 189, 0.02);
+    }
+
+    body::after {
+      right: -210px;
+      bottom: -240px;
+      width: 480px;
+      height: 480px;
+      box-shadow: 0 0 0 42px rgba(255, 222, 189, 0.025), 0 0 0 84px rgba(255, 222, 189, 0.02);
+    }
+
+    .bg-elements {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .heart-particle {
+      position: absolute;
+      bottom: -48px;
+      color: rgba(255, 224, 214, 0.52);
+      animation: floatUp linear infinite;
+      user-select: none;
+      filter: drop-shadow(0 0 9px rgba(255, 210, 216, 0.18));
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(.7) rotate(-12deg); opacity: 0; }
+      12% { opacity: .8; }
+      85% { opacity: .55; }
+      100% { transform: translateY(-112vh) scale(1.15) rotate(20deg); opacity: 0; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: min(100%, 560px);
+      text-align: center;
+    }
+
+    .intro {
+      margin-bottom: 36px;
+      animation: reveal .8s both;
+    }
+
+    .eyebrow {
+      margin-bottom: 12px;
+      color: #f0c98b;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      color: #fff5ec;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: 1.12;
+      text-shadow: 0 4px 28px rgba(15, 5, 12, .2);
+    }
+
+    .intro h1 span {
+      display: block;
+      margin-top: 5px;
+      color: #f2c8a9;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.18em;
+      letter-spacing: 0;
+    }
+
+    .intro-note {
+      margin-top: 14px;
+      color: rgba(255, 242, 232, .7);
+      font-size: .88rem;
+      letter-spacing: .03em;
+    }
+
+    .envelope-container {
+      position: relative;
+      width: min(340px, calc(100vw - 56px));
+      height: 230px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      cursor: pointer;
+      perspective: 1000px;
+      -webkit-tap-highlight-color: transparent;
+      animation: reveal .9s .12s both;
+      transition: transform .25s ease;
+    }
+
+    .envelope-container:focus-visible,
+    .music-button:focus-visible,
+    .close-btn:focus-visible {
+      outline: 3px solid #f0c98b;
+      outline-offset: 6px;
+    }
+
+    .envelope-container:hover {
+      transform: translateY(-4px);
+    }
+
+    .envelope-base {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #d88a83, #b95d70);
+      box-shadow: 0 30px 65px rgba(13, 5, 12, .36), 0 8px 22px rgba(15, 5, 12, .18);
+    }
+
+    .envelope-base::before {
+      position: absolute;
+      inset: 1px;
+      border: 1px solid rgba(255, 237, 214, .42);
+      border-radius: 13px;
+      content: '';
+      pointer-events: none;
+    }
+
+    .letter-paper {
+      position: absolute;
+      z-index: 1;
+      top: 12px;
+      left: 5%;
+      display: flex;
+      width: 90%;
+      height: 91%;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #f0ddca;
+      border-radius: 8px;
+      background:
+        radial-gradient(ellipse at top, rgba(247, 225, 203, .45), transparent 70%),
+        var(--paper);
+      box-shadow: 0 4px 15px rgba(64, 24, 39, .14);
+      transition: transform .75s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .letter-paper::before {
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(189, 85, 116, .2);
+      border-radius: 4px;
+      content: '';
+    }
+
+    .letter-paper-preview {
+      position: relative;
+      color: var(--wine);
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+    }
+
+    .flap-left,
+    .flap-right,
+    .flap-bottom {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+    }
+
+    .flap-left {
+      z-index: 2;
+      background: linear-gradient(135deg, #e49b8b, #ce7b7c);
+      clip-path: polygon(0 0, 51% 50%, 0 100%);
+    }
+
+    .flap-right {
+      z-index: 2;
+      background: linear-gradient(225deg, #de9285, #c36c78);
+      clip-path: polygon(100% 0, 49% 50%, 100% 100%);
+    }
+
+    .flap-bottom {
+      z-index: 3;
+      background: linear-gradient(0deg, #ba6372, #d17d7d);
+      clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+    }
+
+    .flap-top {
+      position: absolute;
+      z-index: 5;
+      inset: 0 0 auto;
+      height: 58%;
+      border-radius: 14px 14px 0 0;
+      background: linear-gradient(180deg, #e7a08a, #d17c7b);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform .65s cubic-bezier(.2, .7, .2, 1), z-index 0s .33s;
+      backface-visibility: hidden;
+    }
+
+    .wax-seal {
+      position: absolute;
+      z-index: 6;
+      top: 50%;
+      left: 50%;
+      display: grid;
+      width: 60px;
+      height: 60px;
+      place-items: center;
+      border: 1px solid rgba(255, 220, 180, .55);
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #a84361, #672342 78%);
+      box-shadow: 0 5px 13px rgba(66, 22, 39, .34), inset 0 1px 5px rgba(255, 235, 220, .22);
+      color: #f8dcae;
+      font-size: 1.55rem;
+      transform: translate(-50%, -50%);
+      transition: transform .3s ease, opacity .28s ease;
+    }
+
+    .envelope-container:hover .wax-seal {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .envelope-container.opened {
+      transform: none;
+    }
+
+    .envelope-container.opened .flap-top {
+      z-index: 0;
+      transform: rotateX(180deg);
+    }
+
+    .envelope-container.opened .wax-seal {
+      opacity: 0;
+    }
+
+    .envelope-container.opened .letter-paper {
+      transform: translateY(-85px);
+    }
+
+    .hint-text {
+      margin-top: 34px;
+      color: #ffe9db;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.08rem;
+      font-style: italic;
+      animation: hintPulse 2.8s ease-in-out infinite;
+      transition: opacity .3s ease;
+    }
+
+    .hint-sparkle {
+      padding: 0 5px;
+      color: #f0c98b;
+      font-style: normal;
+    }
+
+    @keyframes hintPulse {
+      0%, 100% { opacity: .72; }
+      50% { opacity: 1; }
+    }
+
+    .music-button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 9px;
+      margin-top: 25px;
+      padding: 9px 16px;
+      border: 1px solid rgba(255, 228, 205, .35);
+      border-radius: 999px;
+      background: rgba(255, 244, 232, .08);
+      color: rgba(255, 244, 232, .84);
+      cursor: pointer;
+      font: 500 .78rem 'DM Sans', sans-serif;
+      letter-spacing: .025em;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .music-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 228, 205, .65);
+      background: rgba(255, 244, 232, .14);
+    }
+
+    .music-icon {
+      color: #f0c98b;
+      font-size: 1rem;
+    }
+
+    .music-button[aria-pressed="true"] .music-icon {
+      animation: musicPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes musicPulse {
+      to { transform: scale(1.22); }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 8;
+      inset: 0;
+      background: rgba(22, 10, 20, .68);
+      backdrop-filter: blur(9px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-letter {
+      position: fixed;
+      z-index: 9;
+      top: 50%;
+      left: 50%;
+      width: min(580px, calc(100vw - 32px));
+      max-height: min(84vh, 760px);
+      max-height: min(84svh, 760px);
+      overflow-y: auto;
+      padding: clamp(28px, 6vw, 46px) clamp(23px, 7vw, 54px);
+      border: 1px solid rgba(194, 146, 111, .42);
+      border-radius: 5px;
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(242, 215, 187, .48), transparent 45%),
+        var(--paper);
+      box-shadow: 0 30px 100px rgba(15, 5, 12, .45);
+      color: #45353a;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -46%) scale(.96);
+      transition: opacity .38s ease, transform .45s cubic-bezier(.2, .75, .25, 1);
+    }
+
+    .modal-letter::before {
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(189, 85, 116, .2);
+      content: '';
+      pointer-events: none;
+    }
+
+    .modal-letter.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .letter-header,
+    .letter-body,
+    .letter-signature,
+    .close-btn {
+      position: relative;
+    }
+
+    .letter-header {
+      margin-bottom: 23px;
+      text-align: center;
+    }
+
+    .letter-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: #a37a58;
+      font: 700 .63rem 'DM Sans', sans-serif;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .letter-header h2 {
+      color: #9e3b61;
+      font: 400 clamp(2.5rem, 9vw, 3.5rem)/1.08 'Great Vibes', cursive;
+    }
+
+    .letter-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      color: #bb7890;
+      font-size: .85rem;
+    }
+
+    .letter-divider::before,
+    .letter-divider::after {
+      width: 42px;
+      height: 1px;
+      background: #e4cbb9;
+      content: '';
+    }
+
+    .letter-body {
+      margin-bottom: 22px;
+      color: #57464b;
+      font: 400 1rem/1.9 'Playfair Display', serif;
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    .letter-signature {
+      color: #9e3b61;
+      font: 600 1.85rem/1.2 'Caveat', cursive;
+      text-align: right;
+    }
+
+    .close-btn {
+      display: block;
+      margin: 27px auto 0;
+      padding: 11px 22px;
+      border: 1px solid #b9687c;
+      border-radius: 999px;
+      background: transparent;
+      color: #923a5b;
+      cursor: pointer;
+      font: 600 .78rem 'DM Sans', sans-serif;
+      letter-spacing: .035em;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .close-btn:hover {
+      transform: translateY(-1px);
+      background: #923a5b;
+      color: white;
+    }
+
+    .confetti-piece {
+      position: fixed;
+      z-index: 12;
+      top: -16px;
+      width: 8px;
+      height: 13px;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: confettiFall var(--duration) cubic-bezier(.2, .65, .35, 1) forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translate3d(0, -5vh, 0) rotate(0); opacity: 1; }
+      100% { transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin)); opacity: 0; }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(13px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 38px 16px; }
+      .intro { margin-bottom: 32px; }
+      .envelope-container { height: 205px; }
+      .envelope-container.opened .letter-paper { transform: translateY(-72px); }
+      .hint-text { margin-top: 29px; font-size: 1rem; }
+      .letter-body { font-size: .95rem; line-height: 1.82; }
+      .letter-signature { font-size: 1.7rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    /* Una noche en el bosque: azules fríos, plata y cera carmesí. */
+    :root { color-scheme: dark; --wine: #304c57; --rose: #7f9ba5; --gold: #c5d9df; --paper: #e9eded; }
+    body { background: radial-gradient(ellipse at 50% 18%, #53758366, transparent 48%), linear-gradient(180deg,#142d3c,#08151d 85%); color: #e4eef0; padding: 68px 20px 45px; }
+    body::before { inset: 0; width: 100%; height: 100%; border: 0; border-radius: 0; background: url('twilight-forest-wolf.png') center center / cover no-repeat; box-shadow: none; opacity: 1; }
+    body::after { inset: 0; width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; background: linear-gradient(0deg,#07121999,transparent 50%),radial-gradient(ellipse at 50% 62%,#a7d0db20,transparent 65%); }
+    .bg-elements::before { content: ''; position: absolute; inset: -20%; background: radial-gradient(ellipse at 30% 70%,#b3d5de20,transparent 42%),radial-gradient(ellipse at 80% 45%,#b3d5de16,transparent 40%); animation: mist 24s ease-in-out infinite alternate; }
+    @keyframes mist { to { transform: translate(8%, -3%); } }
+    .wrapper { width: min(100%, 660px); }
+    .intro { margin-bottom: 52px; }
+    .eyebrow { color: #b3cbd4; font-size: .6rem; letter-spacing: .3em; line-height: 1.8; }
+    .intro h1 { color: #eef4f5; font-size: clamp(2.5rem,7vw,4.1rem); letter-spacing: -.045em; text-shadow: 0 0 35px #bce1ed25; }
+    .intro h1 span { color: #c0d3dc; font-family: 'Playfair Display',serif; font-style: italic; font-size: .78em; margin-top: 10px; }
+    .intro-note { color: #a6bec8; font-size: .78rem; margin-top: 22px; letter-spacing: .12em; }
+    .envelope-base { background: linear-gradient(145deg,#81969d,#344e5a); box-shadow: 0 35px 80px #0009,0 0 60px #b7dce30b; }
+    .envelope-base::before { border-color: #d7e6e650; }
+    .flap-left { background: linear-gradient(135deg,#8c9fa5,#506b77); }
+    .flap-right { background: linear-gradient(225deg,#748d97,#3a5665); }
+    .flap-bottom { background: linear-gradient(0deg,#3b5665,#6e8792); }
+    .flap-top { background: linear-gradient(180deg,#97a8ae,#5b7582); }
+    .wax-seal { background: radial-gradient(circle at 30% 25%,#a33d47,#501824 78%); color: #dbc5be; border-color: #c9959159; box-shadow: 0 5px 18px #0006,inset 0 0 0 5px #d59d941a; }
+    .letter-paper { background: var(--paper); border-color: #c7d2d5; }
+    .letter-paper::before,.modal-letter::before { border-color: #6b899a40; }
+    .hint-text { color: #bbcdd5; font-size: .95rem; margin-top: 38px; }
+    .hint-sparkle,.music-icon { color: #b7cfd8; }
+    .music-button { border-color: #a6c1ce40; color: #d4e1e6; background: #10253188; margin-top: 27px; }
+    .music-button:hover { border-color: #adcbd0; background: #28414c; }
+    .track-note { color: #88a2af; margin-top: 11px; font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; }
+    .heart-particle { color: #cee5ee77; filter: drop-shadow(0 0 5px #e1f6ff55); }
+    .modal-backdrop { background: #030d16bf; }
+    .modal-letter { color-scheme: light; background: linear-gradient(135deg,#f0f1ed,#dce4e5); border-color: #a7bbc3; box-shadow: 0 30px 100px #0009; }
+    .letter-kicker { color: #647e88; }
+    .letter-header h2,.letter-signature { color: #395766; }
+    .letter-body { color: #354750; }
+    .letter-divider { color: #8b3945; }
+    .letter-divider::before,.letter-divider::after { background: #a8bbc2; }
+    .close-btn { border-color: #728f9c; color: #355665; }
+    .close-btn:hover { background: #355665; }
+    .confetti-piece { border-radius: 50%; width: 3px; height: 3px; box-shadow: 0 0 8px #d8efff; }
+    :is(.envelope-container,.music-button,.close-btn):focus-visible { outline-color: #c9e3ec; }
+    @media(max-width:480px) { body { padding-top: 48px; } .intro { margin-bottom: 44px; } .eyebrow { font-size: .53rem; letter-spacing: .2em; } .intro-note { font-size: .7rem; } }
+    .twilight-scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    @media(max-width:600px) { .twilight-scene { width: 150%; left: -42%; } }
+    @media(max-width:600px) { body::before { background-position: 72% center; } }
+  </style>
+</head>
+<body>
+  <audio id="backgroundMusic" src="Twilight-Bon%20Iver%20%26%20St.%20Vincent%20Roslyn(Edit).mp3" preload="metadata" loop></audio>
+
+  <div class="bg-elements" id="bgElements" aria-hidden="true"></div>
+
+  <main class="wrapper">
+    <header class="intro">
+      <p class="eyebrow">Bajo la misma luna</p>
+      <h1>Desde que llegaste,<span>todo tiene más magia</span></h1>
+      <p class="intro-note">Para Mirian. Mi todo. Mi infinito.</p>
+    </header>
+
+    <button class="envelope-container" id="envelope" type="button" aria-label="Abrir la carta para Mirian" aria-expanded="false">
+      <span class="envelope-base" aria-hidden="true">
+        <span class="letter-paper"><span class="letter-paper-preview">Para: Mirian ❤️</span></span>
+        <span class="flap-left"></span>
+        <span class="flap-right"></span>
+        <span class="flap-bottom"></span>
+        <span class="flap-top"></span>
+        <span class="wax-seal">♥</span>
+      </span>
+    </button>
+
+    <p class="hint-text" id="hintText"><span class="hint-sparkle">✦</span> Toca el sobre para descubrir tu carta <span class="hint-sparkle">✦</span></p>
+
+    <button class="music-button" id="musicButton" type="button" aria-pressed="false" aria-label="Escuchar Roslyn">
+      <span class="music-icon" aria-hidden="true">♫</span>
+      <span id="musicLabel">Escuchar Roslyn</span>
+    </button>
+    <p class="track-note">Roslyn · Bon Iver &amp; St. Vincent</p>
+  </main>
+
+  <div class="modal-backdrop" id="backdrop"></div>
+
+  <section class="modal-letter" id="modalLetter" role="dialog" aria-modal="true" aria-labelledby="letterTitle" aria-hidden="true" inert tabindex="-1">
+    <header class="letter-header">
+      <span class="letter-kicker">En tu día especial</span>
+      <h2 id="letterTitle">Para mi amada Mirian</h2>
+      <div class="letter-divider" aria-hidden="true">✦</div>
+    </header>
+
+    <div class="letter-body">Este día es un día muy especial, quería aprovechar en mencionarte que estoy muy agradecido y me siento muy dichoso por tenerte en mi vida, gracias por existir, gracias por cada sonrisa, por cada ocurrencia, gracias por tu obsesión por los makis, seguramente te preguntarás ¿por qué?, en las cosas que menos puedes imaginarte está esa magia única que nace de ti, te amo con toda mi existencia, espero que el día de hoy sea de agrado los regalitos que tengo para ti, pequeños pero con mucho amor, espero que te guste este día, un día que solo merece sonrisas y alegrías, tu existencia es ello, motivo de algarabía, no olvides nunca que te amo y que eres todo para mi.</div>
+
+    <p class="letter-signature">Feliz Cumpleaños mi amada Mirian ❤️</p>
+
+    <button class="close-btn" id="closeButton" type="button">Guardar mi carta con amor</button>
+  </section>
+
+  <script>
+    const bgContainer = document.getElementById('bgElements');
+    const envelope = document.getElementById('envelope');
+    const hintText = document.getElementById('hintText');
+    const modal = document.getElementById('modalLetter');
+    const backdrop = document.getElementById('backdrop');
+    const closeButton = document.getElementById('closeButton');
+    const musicButton = document.getElementById('musicButton');
+    const musicLabel = document.getElementById('musicLabel');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const particleEmojis = ['\u00b7', '\u00b7', '\u2727'];
+    const confettiColors = ['#bdd4df', '#e2eff5', '#829eac'];
+    let isOpened = false;
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.volume = 0.45;
+    let musicBusy = false;
+
+    for (let i = 0; i < (reducedMotion ? 8 : 18); i += 1) {
+      const particle = document.createElement('span');
+      particle.className = 'heart-particle';
+      particle.textContent = particleEmojis[Math.floor(Math.random() * particleEmojis.length)];
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${10 + Math.random() * 12}s`;
+      particle.style.animationDelay = `${Math.random() * 12}s`;
+      particle.style.fontSize = `${14 + Math.random() * 15}px`;
+      bgContainer.appendChild(particle);
+    }
+
+    function updateMusicState() {
+      const playing = !backgroundMusic.paused;
+      musicButton.setAttribute('aria-pressed', String(playing));
+      musicButton.setAttribute('aria-label', playing ? 'Pausar Roslyn' : 'Escuchar Roslyn');
+      musicLabel.textContent = playing ? 'Pausar Roslyn' : 'Escuchar Roslyn';
+    }
+
+    async function startMusic() {
+      if (musicBusy || !backgroundMusic.paused) return;
+      musicBusy = true;
+      try { await backgroundMusic.play(); }
+      catch { musicLabel.textContent = 'Toca para reintentar Roslyn'; }
+      finally { musicBusy = false; }
+    }
+
+    function toggleMusic() {
+      if (backgroundMusic.paused) startMusic();
+      else backgroundMusic.pause();
+    }
+    backgroundMusic.addEventListener('play', updateMusicState);
+    backgroundMusic.addEventListener('pause', updateMusicState);
+    backgroundMusic.addEventListener('error', () => {
+      musicButton.setAttribute('aria-pressed', 'false');
+      musicLabel.textContent = 'No se pudo cargar Roslyn';
+    });
+
+    function launchConfetti() {
+      if (reducedMotion) return;
+      for (let i = 0; i < 76; i += 1) {
+        const piece = document.createElement('span');
+        piece.className = 'confetti-piece';
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        piece.style.setProperty('--duration', `${2.2 + Math.random() * 2.2}s`);
+        piece.style.setProperty('--drift', `${Math.random() * 220 - 110}px`);
+        piece.style.setProperty('--spin', `${Math.random() * 1000 - 500}deg`);
+        piece.addEventListener('animationend', () => piece.remove(), { once: true });
+        document.body.appendChild(piece);
+      }
+    }
+
+    function openLetter() {
+      if (isOpened) return;
+      isOpened = true;
+      startMusic();
+      envelope.classList.add('opened');
+      envelope.setAttribute('aria-expanded', 'true');
+      hintText.style.opacity = '0';
+      launchConfetti();
+
+      window.setTimeout(() => {
+        modal.inert = false;
+        document.querySelector('main').inert = true;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        backdrop.classList.add('active');
+        modal.focus();
+      }, 520);
+    }
+
+    function closeLetter() {
+      if (!isOpened) return;
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      backdrop.classList.remove('active');
+      modal.inert = true;
+      document.querySelector('main').inert = false;
+      envelope.focus();
+
+      window.setTimeout(() => {
+        envelope.classList.remove('opened');
+        envelope.setAttribute('aria-expanded', 'false');
+        hintText.style.opacity = '1';
+        isOpened = false;
+      }, 380);
+    }
+
+    envelope.addEventListener('click', openLetter);
+    closeButton.addEventListener('click', closeLetter);
+    backdrop.addEventListener('click', closeLetter);
+    musicButton.addEventListener('click', toggleMusic);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeLetter();
+    });
+  </script>
+</body>
+</html>
